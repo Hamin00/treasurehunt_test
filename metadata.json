@@ -1,0 +1,6 @@
+{
+  "name": "GeoQuest: GPS Treasure Hunt",
+  "description": "An immersive real-world GPS treasure hunt and geocaching adventure. Navigate to real coordinates to unlock cryptic clues, solve location-triggered puzzles, and discover legendary artifacts.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
