@@ -5,6 +5,7 @@ import { DEFAULT_QUESTS } from './data/defaultQuests';
 import { calculateDistanceMeters } from './utils/geo';
 import { sound } from './utils/audio';
 import { TreasureMap } from './components/TreasureMap';
+import { TacticalRadarMap } from './components/TacticalRadarMap';
 import { CompassHUD } from './components/CompassHUD';
 import { VirtualExplorerControls } from './components/VirtualExplorerControls';
 import { ClueModal } from './components/ClueModal';
@@ -353,12 +354,28 @@ export default function App() {
 
       {/* 3. Main Dashboard Workspace */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 lg:p-6 flex flex-col gap-5">
-        <APIProvider apiKey={GOOGLE_MAPS_API_KEY}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-            {/* Left 7 Cols: Google Map & GPS Radar Visualizer */}
-            <div className="lg:col-span-7 flex flex-col gap-4">
-              <div className="w-full h-[380px] sm:h-[460px] lg:h-[580px]">
-                <TreasureMap
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          {/* Left 7 Cols: Google Map or Tactical Radar Visualizer */}
+          <div className="lg:col-span-7 flex flex-col gap-4">
+            <div className="w-full h-[380px] sm:h-[460px] lg:h-[580px]">
+              {GOOGLE_MAPS_API_KEY ? (
+                <APIProvider apiKey={GOOGLE_MAPS_API_KEY}>
+                  <TreasureMap
+                    explorerPos={explorerPos}
+                    checkpoints={currentQuest.checkpoints}
+                    activeCheckpointIndex={activeCheckpointIndex}
+                    solvedCheckpointIds={progress.solvedCheckpoints}
+                    onSelectCheckpoint={(cp) => setActiveModalCheckpoint(cp)}
+                    onMapClick={(coords) => {
+                      if (isSimulatedMovement) {
+                        handleUpdateCoordinates(coords);
+                      }
+                    }}
+                    isSimulatedMovement={isSimulatedMovement}
+                  />
+                </APIProvider>
+              ) : (
+                <TacticalRadarMap
                   explorerPos={explorerPos}
                   checkpoints={currentQuest.checkpoints}
                   activeCheckpointIndex={activeCheckpointIndex}
@@ -371,7 +388,8 @@ export default function App() {
                   }}
                   isSimulatedMovement={isSimulatedMovement}
                 />
-              </div>
+              )}
+            </div>
 
               {/* Waypoint Sequence Cards */}
               <div className="p-4 bg-stone-900/80 border border-amber-900/30 rounded-2xl">
@@ -487,9 +505,8 @@ export default function App() {
                   </div>
                 </div>
               )}
-            </div>
           </div>
-        </APIProvider>
+        </div>
       </main>
 
       {/* 4. Active Clue & Puzzle Modal */}
