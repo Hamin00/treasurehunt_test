@@ -12,8 +12,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Pirata+One&family=MedievalSharp&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/index-KHSRwk4B.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CLqOpYAl.css">
+    <script>
+      // If GitHub Pages is serving root index.html instead of the compiled build, automatically forward to /docs/
+      if (window.location.hostname.endsWith('github.io') && !window.location.pathname.includes('/docs')) {
+        var cleanPath = window.location.pathname.replace(/\/+$/, '');
+        window.location.replace(cleanPath + '/docs/' + window.location.search + window.location.hash);
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-td0sAjkN.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-3F6X6Vvu.css">
   </head>
   <body class="bg-stone-950 text-stone-100 antialiased selection:bg-amber-500/30 selection:text-amber-200">
     <div id="root"></div>
